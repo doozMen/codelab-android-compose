@@ -33,7 +33,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import com.example.reply.R
+import com.example.reply.ui.components.FakeEmail
+import com.example.reply.ui.theme.AppTheme
 
 @Composable
 fun ReplyApp(
@@ -132,3 +135,12 @@ val TOP_LEVEL_DESTINATIONS = listOf(
         iconTextId = R.string.tab_article
     )
 )
+
+@Preview
+@Composable
+fun ReplyAppPreview() {
+    AppTheme {
+        val uiState = ReplyHomeUIState(emails = listOf(FakeEmail()))
+        ReplyApp(replyHomeUIState = uiState)
+    }
+}
