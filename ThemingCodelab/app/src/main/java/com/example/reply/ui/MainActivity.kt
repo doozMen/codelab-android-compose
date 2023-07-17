@@ -27,6 +27,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.reply.data.LocalEmailsDataProvider
+import com.example.reply.ui.theme.AppTheme
 
 
 class MainActivity : ComponentActivity() {
@@ -38,15 +39,17 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             val uiState by viewModel.uiState.collectAsState()
-            ReplyApp(
-                replyHomeUIState = uiState,
-                closeDetailScreen = {
-                    viewModel.closeDetailScreen()
-                },
-                navigateToDetail = { emailId ->
-                    viewModel.setSelectedEmail(emailId)
-                }
-            )
+            AppTheme {
+                ReplyApp(
+                    replyHomeUIState = uiState,
+                    closeDetailScreen = {
+                        viewModel.closeDetailScreen()
+                    },
+                    navigateToDetail = { emailId ->
+                        viewModel.setSelectedEmail(emailId)
+                    }
+                )
+            }
         }
     }
 }
@@ -61,9 +64,11 @@ class MainActivity : ComponentActivity() {
 )
 @Composable
 fun ReplyAppPreviewLight() {
-    ReplyApp(
-        replyHomeUIState = ReplyHomeUIState(
-            emails = LocalEmailsDataProvider.allEmails
+    AppTheme {
+        ReplyApp(
+            replyHomeUIState = ReplyHomeUIState(
+                emails = LocalEmailsDataProvider.allEmails
+            )
         )
-    )
+    }
 }
