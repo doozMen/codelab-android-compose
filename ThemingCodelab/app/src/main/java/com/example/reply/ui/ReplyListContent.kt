@@ -30,17 +30,22 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LargeFloatingActionButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.reply.R
 import com.example.reply.data.Email
 import com.example.reply.ui.components.EmailDetailAppBar
+import com.example.reply.ui.components.FakeEmail
 import com.example.reply.ui.components.ReplyEmailListItem
 import com.example.reply.ui.components.ReplyEmailThreadItem
 import com.example.reply.ui.components.ReplySearchBar
+import com.example.reply.ui.theme.AppTheme
 
 
 @Composable
@@ -145,5 +150,17 @@ fun ReplyEmailDetail(
         items(items = email.threads, key = { it.id }) { email ->
             ReplyEmailThreadItem(email = email)
         }
+    }
+}
+
+@Preview(showBackground = false)
+@Composable
+fun ReplyEmailListPreview() {
+    AppTheme {
+        val list = listOf(FakeEmail())
+        ReplyEmailList(
+            emails = list,
+            emailLazyListState = rememberLazyListState(),
+            navigateToDetail = {})
     }
 }

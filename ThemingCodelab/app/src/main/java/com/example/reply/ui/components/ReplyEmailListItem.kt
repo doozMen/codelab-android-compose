@@ -29,6 +29,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -37,9 +38,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.reply.R
+import com.example.reply.data.Account
 import com.example.reply.data.Email
+import com.example.reply.ui.theme.AppTheme
 
 @Composable
 fun ReplyEmailListItem(
@@ -49,7 +53,7 @@ fun ReplyEmailListItem(
     navigateToDetail: (Long) -> Unit
 ) {
     Card(
-        modifier =  modifier
+        modifier = modifier
             .padding(horizontal = 16.dp, vertical = 4.dp)
             .semantics { selected = isSelected }
             .clickable { navigateToDetail(email.id) },
@@ -72,9 +76,11 @@ fun ReplyEmailListItem(
                 ) {
                     Text(
                         text = email.sender.firstName,
+                        style = MaterialTheme.typography.labelMedium
                     )
                     Text(
                         text = email.createdAt,
+                        style = MaterialTheme.typography.labelMedium
                     )
                 }
                 IconButton(
@@ -92,13 +98,43 @@ fun ReplyEmailListItem(
 
             Text(
                 text = email.subject,
+                style = MaterialTheme.typography.titleLarge,
                 modifier = Modifier.padding(top = 12.dp, bottom = 8.dp),
             )
             Text(
                 text = email.body,
                 maxLines = 2,
+                style = MaterialTheme.typography.bodyLarge,
                 overflow = TextOverflow.Ellipsis
             )
         }
     }
+}
+
+@Preview
+@Composable
+fun ReplyEmailListItemPreview() {
+    val email = FakeEmail()
+    AppTheme {
+        ReplyEmailListItem(email = email) {}
+    }
+}
+fun FakeEmail(): Email {
+    return Email(
+        id = 1,
+        sender = FakeAccount(),
+        subject = "Foo bla",
+        body = "bla",
+        createdAt = "01/01/2023")
+}
+private fun FakeAccount(): Account {
+    return Account(
+        id = 1,
+        uid = 2,
+        firstName = "Foo",
+        lastName = "Bar",
+        avatar = R.drawable.avatar_0,
+        email = "some@mail.com",
+        altEmail = "alt@mail.com"
+    )
 }
